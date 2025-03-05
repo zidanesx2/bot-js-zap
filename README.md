@@ -250,3 +250,5 @@ Esta licença garante que todos tenham acesso ao código-fonte e podem colaborar
 ## ⚠ Disclaimer
 
 Neste projeto, precisei hospedar a node_modules, para auxiliar quem está rodando o bot pelo celular, pois muitos deles podem não rodar o `npm install` pelo termux corretamente.
+#   b o t - j s - z a p  
+ 
