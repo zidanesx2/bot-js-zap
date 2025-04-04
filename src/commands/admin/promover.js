@@ -4,34 +4,47 @@ const { toUserJid, onlyNumbers } = require(`${BASE_DIR}/utils`);
 
 module.exports = {
   name: "promover",
-  description: "Promove um membro ao cargo de administrador no grupo",
+  description: "Promove um membro ao cargo de administrador no grupo.",
   commands: ["promote", "promover", "adm"],
-  usage: `${PREFIX}promover @marcar_membro 
+  usage: `${PREFIX}promover @membro  
 
-ou 
+ou  
 
 ${PREFIX}promover (mencionando uma mensagem)`,
-  handle: async ({ args, isReply, socket, remoteJid, replyJid, sendReply, sendSuccessReact }) => {
+  handle: async ({ args, isReply, socket, remoteJid, replyJid, sendReply, sendSuccessReact, sendReact }) => {
+    await sendReact("⚙️");
+
+    // Verifica se um membro foi mencionado ou se é uma resposta a uma mensagem
     if (!args.length && !isReply) {
-      throw new InvalidParameterError(" *Você precisa mencionar ou marcar um membro!* ");
+      throw new InvalidParameterError("❌ *Você precisa marcar ou mencionar um membro para promovê-lo!*");
     }
 
+    // Obtém o JID do membro a ser promovido
     const memberToPromoteJid = isReply ? replyJid : toUserJid(args[0]);
     const memberToPromoteNumber = onlyNumbers(memberToPromoteJid);
 
     if (memberToPromoteNumber.length < 7 || memberToPromoteNumber.length > 15) {
-      throw new InvalidParameterError("Número inválido!");
+      throw new InvalidParameterError("❌ *Número inválido!*");
     }
 
     try {
       await socket.groupParticipantsUpdate(remoteJid, [memberToPromoteJid], "promote");
       await sendSuccessReact();
-      await sendReply(`@${memberToPromoteNumber} ⚙️ *foi promovido a administrador!* ⚙️ `, {
-        mentions: [memberToPromoteJid],
-      });
+
+      // 🔥 PAINEL MEGA ESTILOSO! 🔥
+      const painel = `
+╭━━━━━━━━━━━━━━━━━━━━━╮
+┃   🚀 *PROMOÇÃO REALIZADA!* 🚀
+┃━━━━━━━━━━━━━━━━━━━━━┃
+┃ 👤 *Usuário:* @${memberToPromoteNumber}
+┃ 🏆 *Agora é um Administrador!*
+╰━━━━━━━━━━━━━━━━━━━━━╯
+`;
+
+      await sendReply(painel, { mentions: [memberToPromoteJid] });
     } catch (error) {
-      console.error("[GENOS V1 | ERROR] Erro ao promover usuário:", error);
-      await sendReply("O Bot precisa ser Administrador para promover membros!");
+      console.error("[BOT ERROR] Erro ao promover usuário:", error);
+      await sendReply("❌ *O Bot precisa ser Administrador para promover membros!*");
     }
   },
 };

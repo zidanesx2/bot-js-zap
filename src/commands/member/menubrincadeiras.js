@@ -5,14 +5,14 @@ const path = require("path");
 module.exports = {
   name: "menubrincadeiras",
   description: "Menu de comandos",
-  commands: ["menub", "helpbrincadeiras", "brincadeiras", "menubrincadeiras"],
+  commands: ["menuz", "menuzoeiras", "menuzoeira"],
   usage: `${PREFIX}menu`,
   handle: async ({ sendImageFromFile, sendReact }) => {
 
     await sendReact("✅")
 
     await sendImageFromFile(
-      path.join(ASSETS_DIR, "images", "Lua Bot2.jpg"),
+      path.join(ASSETS_DIR, "images", "aluguel.jpg"),
       `\n\n${menuMessage()}`
     );
   },

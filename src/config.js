@@ -7,7 +7,7 @@ exports.PREFIX = "/";
 exports.BOT_EMOJI = "";
 
 // Nome do bot (mude se preferir).
-exports.BOT_NAME = "𝐆𝐄𝐍𝐎𝐒 𝐕𝟏";
+exports.BOT_NAME = "𝐆𝐄𝐍𝐎𝐒 𝐕𝟏.𝟓";
 
 // Número do bot. Coloque o número do bot
 // (apenas números, exatamente como está no WhatsApp).
@@ -33,7 +33,7 @@ exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 100;
 exports.SPIDER_API_BASE_URL = "https://api.spiderx.com.br/api";
 
 // Obtenha seu token, criando uma conta em: https://api.spiderx.com.br.
-exports.SPIDER_API_TOKEN = "n9PCwomzlJXZ8jwlargz";
+exports.SPIDER_API_TOKEN = "4Ljr2kGYMls4nuxiFhat";
 
 // Caso queira responder apenas um grupo específico, coloque o ID dele aqui (ex: 120363023799506419@g.us). Apenas para testes internos!
 exports.ONLY_GROUP_ID = "";

@@ -55,6 +55,22 @@ ${PREFIX}ban (mencionando uma mensagem)`,
 
     await sendSuccessReact();
 
-    await sendReply("Membro removido com sucesso!");
+    await sendReply(`
+╭━━━ 🔥 *EXPULSÃO* 🔥 ━━━╮
+┃  
+┃  🚨 *ALERTA!* 🚨
+┃  ❌ O usuário foi removido do grupo!
+┃  
+┃  🔥 *JUSTIÇA FOI FEITA!* 🔥
+┃  
+┃  🚀 *FICAREMOS MAIS FORTES SEM ELE!* 🚀
+┃  
+┃  📌 *Regras do Grupo:*
+┃  1️⃣ Respeito sempre.
+┃  2️⃣ Sem spam ou flood.
+┃  3️⃣ Nada de conteúdo proibido.
+┃  
+╰━━━━━━━━━━━━━━━━━━━━╯
+        `.trim());
   },
 };

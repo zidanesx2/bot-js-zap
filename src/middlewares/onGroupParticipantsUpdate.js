@@ -30,7 +30,23 @@ exports.onGroupParticipantsUpdate = async ({
 
       await socket.sendMessage(remoteJid, {
         image: buffer,
-        caption: `Seja bem vindo ao grupo!, se apresente!, @${onlyNumbers(userJid)}!`,
+        caption: `
+╭━━ 🎉 *BEM-VINDO(A)* 🎉 ━━╮
+┃  
+┃  👋 Olá, @${onlyNumbers(userJid)}!
+┃  
+┃  Seja muito bem-vindo(a) ao grupo!
+┃  Esperamos que se divirta e interaja.
+┃  
+┃  💬 *Apresente-se!*  
+┃  ━━━━━━━━━━━━━━━━━━━
+┃  🧑 Nome:
+┃  🎂 Idade:
+┃  🌆 Cidade:
+┃  📥 Foto:
+┃  
+╰━━━━━━━━━━━━━━━━━━━━━━━╯
+        `.trim(),
         mentions: [userJid],
       });
 
@@ -44,4 +60,3 @@ exports.onGroupParticipantsUpdate = async ({
     }
   }
 };
-

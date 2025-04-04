@@ -12,7 +12,7 @@ module.exports = {
     await sendReact("✅")
 
     await sendImageFromFile(
-      path.join(ASSETS_DIR, "images", "Lua Bot2.jpg"),
+      path.join(ASSETS_DIR, "images", "aluguel.jpg"),
       `\n\n${menuMessage()}`
     );
   },

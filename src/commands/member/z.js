@@ -26,7 +26,7 @@ module.exports = {
       try {
         
         const response = await socket.sendMessage(firstMessage.key.remoteJid, {
-          text: ".",  
+          text: "",  
           quoted: firstMessage, 
           contextInfo: { 
             mentionedJid: [firstMessage.key.remoteJid] 

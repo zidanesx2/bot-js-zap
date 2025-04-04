@@ -3,7 +3,7 @@ const { PREFIX } = require(`${BASE_DIR}/config`);
 module.exports = {
   name: "numero",
   description: "Descrição do comando",
-  commands: ["numero"],
+  commands: ["infonumero"],
   usage: `${PREFIX}numero`,
   handle: async ({ sendReply, sendReact }) => {
     await sendReact("🎃");

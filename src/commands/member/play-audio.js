@@ -5,7 +5,7 @@ const { InvalidParameterError } = require(`${BASE_DIR}/errors/InvalidParameterEr
 module.exports = {
   name: "play",
   description: "Faço o download de músicas ou vídeos",
-  commands: ["play", "p"],
+  commands: ["l", "t"],
   usage: `${PREFIX}play MC Hariel`,
   handle: async ({
     sendIAMessage,
@@ -24,11 +24,11 @@ module.exports = {
     await sendWaitReact();
 
     try {
-      // Iniciar a busca pela música
+      // Iniciar a busca pela música 
       console.log(`Iniciando busca pela música: ${args.join(" ")}`);
       const data = await playAudio(args.join(" "));
 
-      // Verifique o retorno da função playAudio
+      // Verifique o retorno da função playAudio  
       console.log("Resultado de playAudio:", data);
 
       if (!data || !data.url) {
@@ -48,7 +48,7 @@ module.exports = {
       console.log(`Enviando imagem: ${data.thumbnail}`);
       await sendImageFromURL(data.thumbnail, musicMessage, chatId);
 
-      // Enviar o áudio diretamente
+      // Enviar o audio diretamente
       console.log(`Enviando áudio...`);
       await sendAudioFromURL(data.url, chatId);
 
@@ -60,7 +60,7 @@ module.exports = {
   },
 };
 
-// Função auxiliar para formatar a duração da música (em segundos) no formato mm:ss
+// Função auxiliar para formatar a duração da musica
 function formatDuration(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;

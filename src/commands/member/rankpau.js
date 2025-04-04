@@ -1,18 +1,28 @@
 const { PREFIX } = require(`${BASE_DIR}/config`);
 
 module.exports = {
-  name: "Pau",
-  description: "Sorteia um número de 1 a 15 e anuncia o vencedor.",
+  name: "PauMeter",
+  description: "🍆 Mede o tamanho do seu PAU com precisão científica! 🍆",
   commands: ["pau"],
   usage: `${PREFIX}pau`,
   handle: async ({ sendReply, sendReact }) => {
-    // Gera um número aleatório entre 1 e 15
-    const randomNumber = Math.floor(Math.random() * 50) + 1; // Número entre 1 e 15
+    console.log("[🍆 PAU METER] Comando ativado!");
 
-    // Adiciona uma reação ao comando
-    await sendReact("🥒");
+    // Gera um número aleatório entre 1 e 50 cm
+    const randomNumber = Math.floor(Math.random() * 50) + 1;
 
-    // Envia a mensagem com o número sorteado
-    await sendReply(` 🍆 *O tamanho do seu pau e: ${randomNumber} CM!* 🍆`);
+    // Reação apropriada
+    await sendReact("🍆");
+
+    // Mensagem lendária com toda a sofisticação
+    await sendReply(`
+🔞 *CALCULADORA DE PAU* 🔞  
+
+📏 *Medindo seu poder...*  
+🍌 *Avaliando a grandeza...*  
+🔥 *Processando os dados...*  
+
+🍆 *Resultado:* Seu *membro* tem impressionantes *${randomNumber}CM*! 😳💦
+    `);
   },
 };
