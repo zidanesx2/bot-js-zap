@@ -1,4 +1,4 @@
-const { PREFIX, TEMP_DIR } = require(`${BASE_DIR}/config`);
+const { PREFIX, TEMP_DIR, ASSETS_DIR } = require(`${BASE_DIR}/config`);
 const { InvalidParameterError } = require(`${BASE_DIR}/errors/InvalidParameterError`);
 const path = require("path");
 const fs = require("fs");
@@ -10,6 +10,7 @@ module.exports = {
   commands: ["s", "sticker", "fig", "f"],
   usage: `${PREFIX}sticker (marque a imagem/gif/vídeo) ou ${PREFIX}sticker (responda a uma imagem/gif/vídeo)`,
   handle: async ({
+    sendAudioFromFile,
     isImage,
     isVideo,
     downloadImage,
@@ -52,6 +53,11 @@ module.exports = {
             }
           );
         });
+
+        await sendAudioFromFile(
+          path.join(ASSETS_DIR, "audios", "sticker.mp3"),
+          true
+        );
 
         // Envia a figurinha gerada
         await sendSuccessReact();
@@ -108,3 +114,4 @@ module.exports = {
     }
   },
 };
+ 

@@ -1,3 +1,6 @@
+const { ASSETS_DIR } = require("../../config");
+const path = require("path");
+
 const { PREFIX, BOT_NUMBER } = require(`${BASE_DIR}/config`);
 const { DangerError } = require(`${BASE_DIR}/errors/DangerError`);
 const {
@@ -15,6 +18,7 @@ ou
 
 ${PREFIX}ban (mencionando uma mensagem)`,
   handle: async ({
+    sendAudioFromFile,
     args,
     isReply,
     socket,
@@ -51,6 +55,11 @@ ${PREFIX}ban (mencionando uma mensagem)`,
       remoteJid,
       [memberToRemoveJid],
       "remove"
+    );
+
+    await sendAudioFromFile(
+      path.join(ASSETS_DIR, "audios", "ban2.mp3"),
+      true
     );
 
     await sendSuccessReact();

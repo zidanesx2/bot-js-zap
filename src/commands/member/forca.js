@@ -1,6 +1,6 @@
 const { PREFIX } = require(`${BASE_DIR}/config`);
 
-const palavras = ["leao", "carro", "programacao", "genos", "baleia", "gis"];
+const palavras = ["livro, peixe, caderno, leao", "carro", "programacao", "genos", "baleia", "gis"];
 let palavraSecreta = "";
 let tentativas = [];
 let erros = 0;

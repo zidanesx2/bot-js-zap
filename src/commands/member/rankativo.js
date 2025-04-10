@@ -1,8 +1,22 @@
+const fs = require('fs');
 const { PREFIX } = require(`${BASE_DIR}/config`);
 
-let messageCounts = {}; // Contagem de mensagens por membro
+let messageCounts = {}; // Contagem de mensagens separada por grupo
 let processedMessages = new Set(); // Armazena mensagens já processadas
-let groupJid = ""; // Armazena o JID do grupo
+const FILE_PATH = `${BASE_DIR}/messageCounts.json`; // Caminho do arquivo JSON
+
+// Função para carregar os dados do arquivo JSON
+function loadMessageCounts() {
+  if (fs.existsSync(FILE_PATH)) {
+    const data = fs.readFileSync(FILE_PATH);
+    messageCounts = JSON.parse(data);
+  }
+}
+
+// Função para salvar os dados no arquivo JSON
+function saveMessageCounts() {
+  fs.writeFileSync(FILE_PATH, JSON.stringify(messageCounts, null, 2));
+}
 
 module.exports = {
   name: "🏆 Rank Ativo",
@@ -11,45 +25,60 @@ module.exports = {
   usage: `${PREFIX}rankativo`,
   handle: async ({ sendText, socket, remoteJid, sendReact }) => {
     try {
-      groupJid = remoteJid;
+      console.log(`🚀 [RANK ATIVO] Comando iniciado no grupo: ${remoteJid}`);
 
-      console.log("🚀 [RANK ATIVO] Comando iniciado!");
+      // Carregar os dados do arquivo JSON ao iniciar
+      loadMessageCounts();
+
+      // Garante que o objeto do grupo existe
+      if (!messageCounts[remoteJid]) {
+        messageCounts[remoteJid] = {};
+      }
 
       // Reação para indicar que o comando foi recebido
       await sendReact("📊");
       console.log("✅ Reagiu com 📊 e iniciou a contagem!");
 
-      // Escutando o evento de novas mensagens
-      socket.ev.on("messages.upsert", ({ messages }) => {
-        try {
-          messages.forEach((message) => {
-            // Verifica se a mensagem pertence ao grupo correto e não é do bot
-            if (message.key.remoteJid === groupJid && !message.key.fromMe) {
-              const sender = message.key.participant;
-              const messageId = message.key.id;
+      // Escutando o evento de novas mensagens (apenas uma vez)
+      if (!socket.hasRankListener) {
+        socket.hasRankListener = true;
+        socket.ev.on("messages.upsert", ({ messages }) => {
+          try {
+            messages.forEach((message) => {
+              const groupJid = message.key.remoteJid;
 
-              // Evita contar a mesma mensagem mais de uma vez
-              if (!processedMessages.has(messageId)) {
-                processedMessages.add(messageId);
+              // Verifica se a mensagem pertence a um grupo e não é do bot
+              if (groupJid.endsWith("@g.us") && !message.key.fromMe) {
+                const sender = message.key.participant;
+                const messageId = message.key.id;
 
-                if (!messageCounts[sender]) {
-                  messageCounts[sender] = 0;
+                // Evita contar a mesma mensagem mais de uma vez
+                if (!processedMessages.has(messageId)) {
+                  processedMessages.add(messageId);
+
+                  if (!messageCounts[groupJid][sender]) {
+                    messageCounts[groupJid][sender] = 0;
+                  }
+                  messageCounts[groupJid][sender]++;
+
+                  console.log(`📩 Contagem de @${sender.split("@")[0]} no grupo ${groupJid}: ${messageCounts[groupJid][sender]}`);
                 }
-                messageCounts[sender]++;
-
-                console.log(`📩 Contagem de mensagens de @${sender.split("@")[0]}: ${messageCounts[sender]}`);
               }
-            }
-          });
-        } catch (messageError) {
-          console.error("⚠️ Erro ao processar mensagens:", messageError);
-        }
-      });
+            });
 
-      console.log("📊 Contagem de mensagens até o momento:", messageCounts);
+            // Salva as contagens no arquivo JSON a cada evento de mensagem
+            saveMessageCounts();
 
-      // Obter o ranking dos 10 membros mais ativos
-      const sortedMembers = Object.entries(messageCounts)
+          } catch (messageError) {
+            console.error("⚠️ Erro ao processar mensagens:", messageError);
+          }
+        });
+      }
+
+      console.log("📊 Contagem de mensagens até o momento:", messageCounts[remoteJid]);
+
+      // Obter o ranking dos 10 membros mais ativos no grupo atual
+      const sortedMembers = Object.entries(messageCounts[remoteJid])
         .sort((a, b) => b[1] - a[1]) // Ordena por quantidade de mensagens (decrescente)
         .slice(0, 10); // Pega os 10 primeiros
 
@@ -85,7 +114,7 @@ module.exports = {
       console.log("📩 Texto do ranking gerado com sucesso!");
 
       // Envia o ranking no grupo com menções visíveis
-      await socket.sendMessage(groupJid, {
+      await socket.sendMessage(remoteJid, {
         text: rankText,
         mentions: mentions, // Faz menções visíveis
       });

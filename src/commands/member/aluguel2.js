@@ -6,13 +6,21 @@ module.exports = {
     description: "Calcula uma porcentagem aleatória de 'quanto aluguel' a pessoa é.",
     commands: ["alugar", "aluguel"],
     usage: `${PREFIX}aluguel`,
-    handle: async ({ sendReply, sendReact, sendImageFromFile }) => {
+    handle: async ({ sendAudioFromFile, sendReply, sendReact, sendImageFromFile }) => {
+
+        await sendAudioFromFile(
+            path.join(ASSETS_DIR, "audios", "aluguel.mp3"),
+            true
+        );
+        
         // Gera uma porcentagem aleatória de 0 a 100
         const randomPercentage = Math.floor(Math.random() * 101);
 
         // Formata a data e hora
         const dataAtual = new Date().toLocaleDateString("pt-BR");
         const horaAtual = new Date().toLocaleTimeString("pt-BR");
+
+        
 
         // Mensagem formatada
         const message = `✦ *INFORMAÇÕES DO ALUGUEL* ✦\n\n` +

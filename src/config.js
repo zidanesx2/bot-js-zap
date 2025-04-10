@@ -3,18 +3,18 @@ const path = require("path");
 // Prefixo dos comandos.
 exports.PREFIX = "/";
 
-// Emoji do bot (mude se preferir).
+// Emoji do bot 
 exports.BOT_EMOJI = "";
 
-// Nome do bot (mude se preferir).
+// Nome do bot 
 exports.BOT_NAME = "𝐆𝐄𝐍𝐎𝐒 𝐕𝟏.𝟓";
 
-// Número do bot. Coloque o número do bot
-// (apenas números, exatamente como está no WhatsApp).
+// Número do bot
+
 exports.BOT_NUMBER = "55999042818";
 
-// Número do dono do bot. Coloque o número do dono do bot
-// (apenas números, exatamente como está no WhatsApp).
+// Número do dono
+
 exports.OWNER_NUMBER = "558296627601";
 
 // Diretório dos comandos
@@ -26,16 +26,16 @@ exports.ASSETS_DIR = path.resolve(__dirname, "..", "assets");
 // Diretório de arquivos temporários.
 exports.TEMP_DIR = path.resolve(__dirname, "..", "assets", "temp");
 
-// Timeout em milissegundos por evento (evita banimento).
+// Timeout em milissegundos por evento
 exports.TIMEOUT_IN_MILLISECONDS_BY_EVENT = 100;
 
 // Plataforma de API's
 exports.SPIDER_API_BASE_URL = "https://api.spiderx.com.br/api";
 
-// Obtenha seu token, criando uma conta em: https://api.spiderx.com.br.
-exports.SPIDER_API_TOKEN = "4Ljr2kGYMls4nuxiFhat";
+// API DO SPIDER
+exports.SPIDER_API_TOKEN = "aRGT8FfoVBSDDIBHuYQl";
 
-// Caso queira responder apenas um grupo específico, coloque o ID dele aqui (ex: 120363023799506419@g.us). Apenas para testes internos!
+// id de grupo
 exports.ONLY_GROUP_ID = "";
 
 // Diretório base do projeto.

@@ -1,6 +1,7 @@
-const { PREFIX } = require(`${BASE_DIR}/config`);
+const { PREFIX, ASSETS_DIR } = require(`${BASE_DIR}/config`);
 const { InvalidParameterError } = require(`${BASE_DIR}/errors/InvalidParameterError`);
 const { toUserJid, onlyNumbers } = require(`${BASE_DIR}/utils`);
+const path = require("path");
 
 module.exports = {
   name: "rebaixar",
@@ -8,10 +9,10 @@ module.exports = {
   commands: ["demote", "rebaixar", "membro"],
   usage: `${PREFIX}rebaixar @membro  
 
-ou  
+
 
 ${PREFIX}rebaixar (mencionando uma mensagem)`,
-  handle: async ({ args, isReply, socket, remoteJid, replyJid, sendReply, sendSuccessReact, sendReact }) => {
+  handle: async ({ sendAudioFromFile, args, isReply, socket, remoteJid, replyJid, sendReply, sendSuccessReact, sendReact }) => {
     await sendReact("📉");
 
     // Verifica se um membro foi mencionado ou se é uma resposta a uma mensagem
@@ -30,6 +31,11 @@ ${PREFIX}rebaixar (mencionando uma mensagem)`,
     try {
       await socket.groupParticipantsUpdate(remoteJid, [memberToDemoteJid], "demote");
       await sendSuccessReact();
+
+      await sendAudioFromFile(
+        path.join(ASSETS_DIR, "audios", "rebaixar.mp3"),
+        true
+      );
 
       // 🔥 PAINEL ULTRA ESTILOSO! 🔥
       const painel = `

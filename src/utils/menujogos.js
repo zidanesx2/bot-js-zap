@@ -7,22 +7,31 @@ const { BOT_NAME, PREFIX } = require("../config");
 
 exports.waitMessage = "Carregando dados...";
 
-exports.menuMessage = () => {
+/**
+ * Gera a mensagem de menu com menção ao autor
+ * @param {string} senderJid - O JID de quem chamou o comando
+ * @returns {{ text: string, mentions: string[] }} - Objeto com texto e menções
+ */
+exports.menuMessage = (senderJid) => {
   const date = new Date();
+  const userNumber = senderJid.split("@")[0]; // extrai apenas o número
 
-  if (!BOT_NAME || !PREFIX) {
-    throw new Error("BOT_NAME e PREFIX devem ser configurados corretamente em config.");
-  }
+  const text = `@${userNumber}
 
-  return `⟅✨ *𝑩𝑶𝑨𝑺-𝑽𝑰𝑵𝑫𝑨𝑺, 𝐆𝐄𝐍𝐎𝐒 𝐕𝟏.𝟓*
+⟅✨ *𝑩𝑶𝑨𝑺-𝑽𝑰𝑵𝑫𝑨𝑺, 𝐆𝐄𝐍𝐎𝐒 𝐕𝟏.𝟓* ⟆
 📌• *${BOT_NAME}*
-📅• *DATA* : *${date.toLocaleDateString("pt-br")}*
-⏰• *HORA* : *${date.toLocaleTimeString("pt-br")}*
+📅• *DATA* : *${date.toLocaleDateString("pt-BR")}*
+⏰• *HORA* : *${date.toLocaleTimeString("pt-BR")}*
 ⚡• *PREFIXO* : ${PREFIX}
 ╰───────────────
 
 ╭━━➣ *JOGOS* ━━
 │🩸🎮 ${PREFIX}quiz
 │🩸🎮 ${PREFIX}forca start
-╰━━─「🚀」─━━`; 
+╰━━─「🚀」─━━`;
+
+  return {
+    text,
+    mentions: [senderJid],
+  };
 };

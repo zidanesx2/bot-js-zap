@@ -7,10 +7,18 @@ const { BOT_NAME, PREFIX } = require("../config");
 
 exports.waitMessage = "Carregando dados...";
 
-exports.menuMessage = () => {
+/**
+ * Gera a mensagem de menu com menção ao autor
+ * @param {string} senderJid - O JID de quem chamou o comando
+ * @returns {{ text: string, mentions: string[] }} - Objeto com texto e menções
+ */
+exports.menuMessage = (senderJid) => {
   const date = new Date();
+  const userNumber = senderJid.split("@")[0]; // extrai apenas o número
 
-  return `⟅✨ 𝑩𝑶𝑨𝑺-𝑽𝑰𝑵𝑫𝑨𝑺, 𝐆𝐄𝐍𝐎𝐒 𝐕𝟏.𝟓
+  const text = `@${userNumber}
+
+⟅✨ 𝑩𝑶𝑨𝑺-𝑽𝑰𝑵𝑫𝑨𝑺, 𝐆𝐄𝐍𝐎𝐒 𝐕𝟏.𝟓
 
 
 📌• *${BOT_NAME}*
@@ -24,21 +32,23 @@ exports.menuMessage = () => {
 
 
 ╭───────────────
-│🩸 🫧 ${PREFIX}menuadm
-│🩸 🎮 ${PREFIX}menujogos
-│🩸 🥀 ${PREFIX}menuzoeira
-│🩸 🌟 /menudono
-
+│💘 🫧 ${PREFIX}menuadm
+│💘 🎮 ${PREFIX}menujogos
+│💘 🥀 ${PREFIX}menubrincadeiras
+│💘 🌟 /menudono
 ╰───────────────
 
 🫧 *𝑰𝑵𝑭𝑶 𝑮𝑬𝑹𝑨𝑳* 🫧
 
 
 ╭───────────────
-│🩸 📋${PREFIX}infocomunidade
-│🩸 📋${PREFIX}infoaluguel 
-│🩸 📋${PREFIX}infodono 
-│🩸 📋${PREFIX}infonumero  
+│💘 📋${PREFIX}infocomunidade
+│💘 📋${PREFIX}infoaluguel
+│💘 📋${PREFIX}infodono
+│💘 📋${PREFIX}infonumero
+│💘 📋${PREFIX}infogenos
+│💘 📋${PREFIX}infometadinha
+│💘 📋${PREFIX}infofigurinhas
 ╰───────────────
 
 
@@ -46,20 +56,26 @@ exports.menuMessage = () => {
 
 
 ╭───────────────
-│🩸☯${PREFIX}attp  
-│🩸☯${PREFIX}cep   
-│🩸☯${PREFIX}gpt   
-│🩸☯${PREFIX}menubrincadeiras ou /menub  
-│🩸☯${PREFIX}numero  
-│🩸☯${PREFIX}ping  
-│🩸☯${PREFIX}play ou /p    
-│🩸☯${PREFIX}sticker 
-│🩸☯${PREFIX}to-image
-│🩸☯${PREFIX}cite 
-│🩸☯${PREFIX}rankativo
-│🩸☯${PREFIX}gerarnick
-│🩸☯${PREFIX}alugar
-╰───────────────`
-};
+│💘☯${PREFIX}attp  
+│💘☯${PREFIX}cep   
+│💘☯${PREFIX}gpt   
+│💘☯${PREFIX}menubrincadeiras ou /menub  
+│💘☯${PREFIX}numero  
+│💘☯${PREFIX}ping  
+│💘☯${PREFIX}play ou /p    
+│💘☯${PREFIX}sticker 
+│💘☯${PREFIX}to-image
+│💘☯${PREFIX}cite 
+│💘☯${PREFIX}rankativo
+│💘☯${PREFIX}gerarnick
+│💘☯${PREFIX}alugar
+│💘☯${PREFIX}animes
+│💘☯${PREFIX}perfil
+│💘☯${PREFIX}metadinhaanimes
+╰───────────────`;
 
- 
+  return {
+    text,
+    mentions: [senderJid],
+  };
+};

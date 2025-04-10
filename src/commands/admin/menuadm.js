@@ -7,10 +7,17 @@ module.exports = {
   description: "Menu de comandos",
   commands: ["menua", "helpbrincadeiras", "brincadeiras", "menuadm", "menubrincadeira"],
   usage: `${PREFIX}menu`,
-  handle: async ({ sendImageFromFile, sendReact }) => {
+  handle: async ({ sendImageFromFile, sendAudioFromFile, sendReact }) => {
 
     await sendReact("✅")
 
+    // Enviar o áudio primeiro
+    await sendAudioFromFile(
+      path.join(ASSETS_DIR, "audios", "admin.mp3"),
+      true // true = envia como ptt
+    );
+
+    // Depois envia a imagem com o menu
     await sendImageFromFile(
       path.join(ASSETS_DIR, "images", "aluguel.jpg"),
       `\n\n${menuMessage()}`

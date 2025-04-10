@@ -35,5 +35,6 @@ exports.menuMessage = () => {
 │🩸📝${PREFIX}marcar
 │🩸📝${PREFIX}promover 
 │🩸📝${PREFIX}rebaixar
+│🩸📝${PREFIX}deletar
 ╰───────────────`; 
 };

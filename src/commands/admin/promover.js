@@ -1,6 +1,8 @@
 const { PREFIX } = require(`${BASE_DIR}/config`);
 const { InvalidParameterError } = require(`${BASE_DIR}/errors/InvalidParameterError`);
 const { toUserJid, onlyNumbers } = require(`${BASE_DIR}/utils`);
+const  path  = require("path");
+const { ASSETS_DIR } = require("../../config");
 
 module.exports = {
   name: "promover",
@@ -11,7 +13,7 @@ module.exports = {
 ou  
 
 ${PREFIX}promover (mencionando uma mensagem)`,
-  handle: async ({ args, isReply, socket, remoteJid, replyJid, sendReply, sendSuccessReact, sendReact }) => {
+  handle: async ({ args, sendAudioFromFile, isReply, socket, remoteJid, replyJid, sendReply, sendSuccessReact, sendReact }) => {
     await sendReact("⚙️");
 
     // Verifica se um membro foi mencionado ou se é uma resposta a uma mensagem
@@ -30,6 +32,11 @@ ${PREFIX}promover (mencionando uma mensagem)`,
     try {
       await socket.groupParticipantsUpdate(remoteJid, [memberToPromoteJid], "promote");
       await sendSuccessReact();
+
+      await sendAudioFromFile(
+        path.join(ASSETS_DIR, "audios", "promover.mp3"),
+        true
+      );
 
       // 🔥 PAINEL MEGA ESTILOSO! 🔥
       const painel = `
